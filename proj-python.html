@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-10-24 Thu 08:20 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Projeto de Python - Waze com velicidades incertas</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Jacques" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Projeto de Python - Waze com velicidades incertas</h1>
+<p>
+<b>Data de entrega: 7/11 ate as 23:59</b>
+</p>
+
+<p>
+Escreva um programa em Python que vai calcular o caminho mais rápido
+(e o segundo mais rápido)
+<b>na média</b>  entre uma origem em um destino dado. O programa recebe um
+grafo direcionado e informação sobre a distancia e velocidade máxima
+na aresta, e recebe também várias medições sobre a velocidade real das
+arestas deve calcular o cominho mais rápido na média e o segundo mais
+rápido na média (assumindo que o motorista andará na maior velocidade permitida em cada aresta) entre uma origem e um destino dados.
+</p>
+
+<p>
+Os dados tem a seguinte forma:
+</p>
+<pre class="example">
+25.0
+aa b 0.4
+aa c 0.5 50.0
+b d 1.2
+b z 0.2 
+z f4 0.3 40.0
+
+aa b 12.5 11.3 10.2 15.3 12.0
+aa c 4.1 4.3 4.7
+z f4 19.0
+b z 0 
+aa
+z
+</pre>
+
+<p>
+A primeira linha indica a velocidade máxima default nas ruas da
+cidade, neste caso, se não ha indicação de velocidade máxima na rua,
+assume-se que seja 25k/h e que o motorista vai dirigir a 25 k/h
+</p>
+
+<p>
+As linhas seguintes são as arestas direcionadas que possuem 3 ou quatro valores. Os dois primeiros são os vértices. O terceiro valor é a distancia em quilômetros entre os vértices. Se houver um quarto valor ele é a velocidade máxima naquele trecho e naquele sentido. O fato da velocidade máxima entre <code>a</code> e <code>c</code> ser 50k/h não significa que ele seja a velocidade no sentido de <code>c</code> para <code>a</code>. Na verdade pode não haver uma aresta de <code>c</code> para <code>a</code> (ou seja esse trecho da rua é mão única).
+</p>
+
+<p>
+Ao final do grafo haverá uma linha sem dados. A partir deste ponto os
+dados indicam diferentes medidas de velocidades atuais nas
+arestas. Nos últimos 10 minutos,  a velocidade de usuários do Waze  de
+<code>aa</code> para <code>b</code> foram medidas como 12.5, 11.3, 10.2, 15.3 e 12.0 k/h. O
+sistema assume que alguma as dessas sejam a velocidade máxima (neste
+momento) nessas arestas. Note que nem todas as arestas terão uma linha de atualização da sua velocidade real. Note também que algumas ruas podem ter velocidade máxima de 0k/h ou seja a rua esta fechada e aquela aresta temporariamente não existe. 
+</p>
+
+<p>
+Finalmente haverá duas linhas com a origem (<code>aa</code>) e o destino (<code>z</code>).
+</p>
+
+<p>
+Calcule o caminho mais rápido (na média) e o segundo mais rapido (como
+alternativa p/ o motorista) o entre a origem e o destino.
+</p>
+
+<p>
+Dado que voce não sabe realmente a velocidade máxima em algumas
+arestas, o sue programa deve trabalhar com amostragens. Selecione
+aleatoriamente uma das velocidades para cada uma das arestas que tem
+varias velocidades. Com essa amostra, voce usar o Dykstra para
+calcular o caminho mais rapido da origem para o destino. Vamos assumir
+que é o caminho <code>aa, b, c, z</code> e que o tempo de transito é de 24.3
+minutos. 
+</p>
+
+<p>
+Amostre novamente as velocidades e recalcule o caminho mais
+rapido. Vamos dizer que neste caso é <code>a,e,f,zz</code> com tempo 22.7
+min. Repita o processo e neste terceiro caso, o caminho mais rapido é
+de novo <code>aa, b, c, z</code> com tempo de 29.4 minutos. 
+</p>
+
+<p>
+Repita o processo de amonstragem aleatória e calculo do caminho mais
+rapido 100 vezes. Ao final voce terá varios caminhos, com varias
+medidas do tempo de transito. Retorne o caminho com menor média do
+tempo de transito e o caminho com a segunda menor media no tempo de
+transito. Note que o segundo melhor caminho não é o segundo melhor
+caminho de cada Dykstra, é o melhor caminho de cada Dikstra que tem a
+segunda melhor média nas amostragens.
+</p>
+
+<p>
+Para os dois caminhos, imprima o tempo de transito <b>em minutos</b>  com 1
+casa decimal, e na próxima linha a sequencia de vértices, da origem ate o destino separados por um espaço.
+</p>
+
+<p>
+Por exemplo:
+</p>
+<pre class="example">
+18.6
+a b d e g z
+</pre>
+<p>
+indica que o tempo de transito será de 18.6 minutos e que o caminho mais rápido é 
+de <code>a</code> para <code>b</code> para <code>d</code> &#x2026; até <code>z</code>
+</p>
+
+<p>
+Seu programa será executado como 
+</p>
+<pre class="example">
+python3 prog3.py &lt; arq1.in
+</pre>
+
+<p>
+Ou seja, você precisa chamar o programa de <code>prog3.py</code> e precisa ter as linhas no final:
+</p>
+<pre class="example">
+if __name__ == "__main__":
+     funcprincipa()
+</pre>
+<p>
+que indica que o Python executará <code>funcprincipal</code> (use o nome que vc quiser) como a primeira chamada do programa.
+</p>
+</div>
+</body>
+</html>
