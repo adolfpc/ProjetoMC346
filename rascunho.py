@@ -1,16 +1,28 @@
+import random
+
 def soma (a,b,c=0):
     return (2*a)+b+c
 
+
+def number():
+    res = random.randint(0,10)
+    return res
 
 lista = [1,2]
 
 a = soma (*lista)
 
-print (a)
+#print (a)
 
-    for x in reversed(dados[:-2]):
-        if x == []:
-            break
-        for y in lista_conexoes:
-            if y[0] == x[0] and y[1] == x[1]:
-                x.insere_vel(*x[2:])
+
+b = number
+
+
+
+def func (*args):
+    print (list(args))
+
+
+lista = [1,2,3,4,5]
+
+func (*lista[5:])
